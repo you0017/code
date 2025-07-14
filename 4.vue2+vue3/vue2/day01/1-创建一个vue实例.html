@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="app">
+        {{message}}
+    </div>
+</body>
+<!--<script 02.prop和data数据流="https://cdn.bootcdn.net/ajax/libs/vue/2.6.13/vue.js"></script>-->
+<script src="../js/vue2.js"></script>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            message: 'hello world'
+        }
+    })
+</script>
+</html>

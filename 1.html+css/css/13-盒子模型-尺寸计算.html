@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        div{
+            width: 200px;
+            height: 200px;
+            background-color: #3064bb;
+
+            /*padding和border会撑大，width和height需要减去对应的px*2*/
+            padding: 20px;
+            border: cyan 5px solid;
+
+            /*或者直接用，等效减去*/
+            box-sizing: border-box;
+        }
+        /*margin不会撑大，如果margin要设置自动，则必须要有width和height才能生效，不然默认一整行*/
+    </style>
+</head>
+<body>
+    <div>
+        div
+    </div>
+</body>
+</html>

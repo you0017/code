@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    {{ words }}
+    <button @click="words = 'hello vue'">修改</button>
+    <br/>
+    <!--下拉框-->
+    <select v-model="obj.lang">
+        <option value="italy">意大利语</option>
+        <option value="english">英语</option>
+        <option value="japanese">日语</option>
+    </select>
+    <textarea cols="30" rows="10" v-model="obj.words"></textarea>
+    <textarea cols="30" rows="10" v-model="newWords"></textarea>
+</div>
+<script src="../js/vue2.js"></script>
+<script src="../js/axios.min.js"></script>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            words: 'hello world',
+            //默认写法
+            /*obj: {
+                words: '',
+                newWords: ''
+            }*/
+            //完整写法
+            obj: {
+                words: '',
+                lang: 'italy'
+            },
+            newWords: ''
+        },
+        watch: {
+            words: function (newVal, oldVal) {
+                console.log(newVal, oldVal)
+            },
+            //默认写法
+            /*'obj.words'(newVal, oldVal) {
+                let timeout = null;
+                if (!timeout) {
+                    clearTimeout(timeout)
+                    timeout = setTimeout(()=>{
+                        axios.get('https:applet-base-api-t.itheima.net/api/translate',
+                            {
+                                params: {
+                                    words: this.words,
+                                    lang: 'English'
+                                }
+                            }).then(result => {
+                            console.log(result.data.data)
+                            this.newWords = result.data.data;
+                        })
+                    },1000)
+                }
+            }*/
+            //完整写法
+            //深度监视
+            'obj': {
+                deep: true,
+                //初始化立即执行一次
+                //immediate: true,
+                handler(newVal, oldVal) {
+                    console.log(newVal, oldVal)
+                    let timeout = null;
+                    if (!timeout) {
+                        clearTimeout(timeout)
+                        timeout = setTimeout(()=>{
+                            axios.get('https:applet-base-api-t.itheima.net/api/translate',
+                                {
+                                    params: this.obj
+                                }).then(result => {
+                                console.log(result.data.data)
+                                this.newWords = result.data.data;
+                            })
+                        },1000)
+                    }
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>

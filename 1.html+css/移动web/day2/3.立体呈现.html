@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .father {
+            position: relative;
+            transform-style: preserve-3d;
+            width: 200px;
+            height: 200px;
+            transition: all 1s;
+        }
+        .son1,.son2,.son3,.son4 {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            transform-origin: right;
+        }
+        .son1 {
+            background-color: #ffffff;
+        }
+        .son2 {
+            background-color: #ff0000;
+            transform: rotateY(180deg);
+        }
+        .son3 {
+            background-color: #00ff00;
+            transform: rotateY(-90deg);
+        }
+        .son4 {
+            background-color: #0000ff;
+            transform: rotateY(90deg);
+        }
+        .father:hover {
+            transform: rotateY(90deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="father">
+        <div class="son1">
+        </div>
+        <div class="son2">
+        </div>
+        <div class="son3">
+        </div>
+        <div class="son4">
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button>返回</button>
+<button>前进</button>
+<button>刷新</button>
+</body>
+<script>
+  let button1 = document.querySelector('button');
+  let button2 = button1.nextElementSibling;
+  let button3 = button2.nextElementSibling;
+
+  button1.addEventListener('click',() => {
+    history.back();
+  })
+
+  button2.addEventListener('click',() => {
+    history.forward();
+  })
+
+  button3.addEventListener('click',() => {
+    location.reload()
+  })
+</script>
+</html>

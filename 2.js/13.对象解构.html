@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        const obj = {
+            "username": 'name',
+            "age": 1
+        };
+        let {username: uname,age: age1} = obj;
+        console.error(uname,age1)
+
+        //解构数组对象
+        const objs = [
+            {
+                "username": 'name1',
+                "age": 12
+            },
+            {
+                "username": 'name2',
+                "age": 12
+            }
+        ];
+        const [{username,age}] = objs;
+        console.error(username,age)
+    </script>
+</body>
+</html>

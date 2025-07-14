@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+    let that;
+    function Person(name,age){
+      that = this;
+      this.name = name;
+      this.age = age;
+    }
+    const person = new Person("张三",18);
+    console.log(that === person);
+    const person2 = new Person("张三2",182);
+    console.log(that === person2);
+
+    Person.prototype.sing = function(){
+      that = this;
+      console.log(this.name + "正在唱歌");
+    }
+    person.sing();
+    console.log(that === person);
+    person2.sing();
+    console.log(that === person2);
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .box{
+            height: 300px;
+            display: flex;
+            border: 1px solid #000;
+            align-items: flex-end;/*默认拉伸*/
+            /*flex-direction: column;交换主轴和副轴*/
+        }
+        .box div{
+            background-color: #608dd9;
+            height: 100px;
+        }
+        .box div:nth-child(2n) {
+            flex: 2;
+            align-self: center;
+        }
+        .box div:nth-child(2n+1) {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+    </div>
+</body>
+</html>

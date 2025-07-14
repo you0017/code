@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        #div1 {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+
+            position: relative;
+        }
+
+        #div2 {
+            width: 20px;
+            height: 20px;
+            background-color: blue;
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /*相对自己当前大小位移*/
+            transform: translate(-50%, -50%);
+        }
+
+        /*
+            position: fixed;固定位置不随页面滚动而移动
+        */
+    </style>
+</head>
+<body>
+    <div id="div1">
+        <div id="div2"></div>
+    </div>
+</body>
+</html>

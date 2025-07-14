@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .father {
+            width: 500px;
+            height: 250px;
+            background-color: red;
+            display: flex;
+            overflow: hidden;
+        }
+        .son1 {
+            width: 250px;
+            height: 250px;
+            background-color: blue;
+            transition: all 1s;
+        }
+        .son2 {
+            width: 250px;
+            height: 250px;
+            background-color: green;
+            transition: all 1s;
+        }
+
+        .father:hover .son1 {
+            transform: translate(-100%);
+            opacity: 0;
+        }
+        .father:hover .son2 {
+            transform: translate(100%);
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="father">
+        <div class="son1"></div>
+        <div class="son2"></div>
+    </div>
+</body>
+</html>

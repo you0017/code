@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    let a = axios.get("http://hmajax.itheima.net/api/province").then(result => {
+        document.write(result.data.list.join("<br/>"))
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>当前时间</h1>
+    <h2 id="time"></h2>
+    <script>
+        const time = document.getElementById('time');
+        setInterval(() => {
+            const date = new Date();
+            const h = date.getHours();
+            const m = date.getMinutes();
+            const s = date.getSeconds();
+            time.innerHTML = `${h}:${m}:${s}`;
+        }, 1000)
+    </script>
+</body>
+
+</html>

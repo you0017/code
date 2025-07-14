@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        div span{
+            color: red;
+        }
+        div > span{
+            color: blue;
+        }
+        /*并集*/
+        div span,div p span{
+            color: green;
+        }
+        /*交集*/
+        /*
+            p.className{
+            }
+        */
+    </style>
+</head>
+<body>
+    <span>123</span>
+    <div>
+        <span>123</span>
+        <p>
+            <span>
+                123weqqw
+            </span>
+        </p>
+    </div>
+</body>
+</html>

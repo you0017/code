@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+    const func1 = a => a + 1;
+    console.error(func1(1))
+
+    const func2 = (a, b) => a + b;
+    console.error(func2(1, 2))
+
+    const func3 = (...args) => {
+      for (let i = 0; i < args.length; i++) {
+        console.warn(args[i])
+      }
+    }
+    func3(1, 2, 3, 4, 5)
+
+    //lambda没有自己的局部区域，this指向外部函数的this
+    const func4 = () => {
+      console.warn(this)
+    }
+    func4();
+
+    const obj = {
+      name: 'obj',
+      func5: function () {
+        console.warn(this)
+      }
+    }
+    obj.func5();
+
+    const obj2 = {
+      name: 'obj2',
+      func6: function () {
+        return () => {
+          console.warn(this)
+        }
+      }
+    }
+    obj2.func6()();
+  </script>
+</body>
+</html>

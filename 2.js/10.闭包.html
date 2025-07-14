@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+    //可以让变量私有化
+    function fn(){
+      let a = 1;
+      return function(){
+        console.log(a);
+        a++;
+      }
+    }
+    const fnc = fn();
+    fnc()
+  </script>
+</body>
+</html>

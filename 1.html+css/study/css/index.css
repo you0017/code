@@ -1,0 +1,363 @@
+body {
+    background-color: #f3f5f7;
+}
+
+.wrapper {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    height: 100px;
+    background-color: #fff;
+}
+
+.header .wrapper {
+    padding-top: 20px;
+    display: flex;
+}
+
+.logo a {
+    font-size: 0;
+    display: block;
+    width: 195px;
+    height: 41px;
+    background-image: url("../images/logo.png");
+}
+
+.nav {
+    margin-left: 102px;
+}
+
+.nav ul {
+    display: flex;
+}
+
+.nav li {
+    margin-right: 24px;
+}
+
+.nav li a {
+    padding: 6px 8px;
+    line-height: 27px;
+    display: inline-block;
+    font-size: 19px;
+}
+
+.nav li .active,
+.nav li a:hover {
+    border-bottom: 2px solid #00a4ff;
+}
+
+.search {
+    display: flex; /*默认拉伸*/
+    margin-left: 64px;
+    padding-left: 19px;
+    padding-right: 12px;
+    width: 412px;
+    height: 40px;
+    background-color: #f3f5f7;
+    border-radius: 20px;
+}
+
+.search input {
+    flex: 1;
+    border: 0;
+    background-color: transparent; /*透明*/
+    outline: none; /*选中框取消*/
+}
+
+/*输入框文字*/
+.search input::placeholder {
+    font-size: 14px;
+    color: #999;
+}
+
+.search button {
+    border: 0;
+    background-color: #f3f5f7;
+}
+
+.user {
+    margin-left: 32px;
+    margin-top: 4px;
+}
+
+.user img {
+    margin-right: 6px;
+    /*处理行内块和行内垂直方向对齐方式*/
+    vertical-align: middle;
+}
+
+.user span {
+    font-size: 16px;
+    color: #666;
+}
+
+.banner {
+    height: 420px;
+    background-color: #0092cb;
+}
+
+.banner .wrapper {
+    background-image: url("../uploads/banner.png");
+    display: flex;
+    justify-content: space-between;
+}
+
+.banner .wrapper .left {
+    padding: 3px 20px;
+    width: 191px;
+    background-color: rgba(0, 0, 0, 0.42);
+}
+
+.banner .left a {
+    display: block;
+    height: 46px;
+    line-height: 46px;
+    font-size: 16px;
+    color: #fff;
+    background: url("../images/right.png") no-repeat right center;
+}
+
+.banner .left a:hover {
+    color: #00a4ff;
+    background-image: url("../images/right-hover.png");
+}
+
+.banner .right {
+    width: 218px;
+    height: 305px;
+    background-color: #209dd5;
+    margin-top: 60px;
+    border-radius: 10px;
+}
+
+.banner .right h3 {
+    height: 48px;
+    line-height: 48px;
+    margin-left: 14px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 400;
+}
+
+.banner .right .content {
+    padding: 14px;
+    height: 257px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.banner .right dl {
+    margin-bottom: 12px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.banner .right dt {
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+}
+
+.banner .right dd {
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.banner .right dd span {
+    color: #00a4ff;
+}
+
+.banner .right dd strong {
+    color: #7d7d7d;
+    font-weight: 400;
+}
+
+.banner .right a {
+    display: block;
+    height: 32px;
+    background-color: #00a4ff;
+    text-align: center;
+    line-height: 32px;
+    border-radius: 15px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.recommend {
+    height: 60px;
+    padding: 0 20px;
+    background-color: #fff;
+    margin-top: 11px;
+    box-shadow: 0 1px 2px 0 rgba(211, 211, 211, 0.5);
+    line-height: 60px;
+    display: flex;
+}
+
+.recommend h3 {
+    font-size: 18px;
+    color: #00a4ff;
+    font-weight: 400;
+}
+
+.recommend ul {
+    flex: 1;
+    display: flex;
+}
+
+.recommend ul li a{
+    padding: 0 24px;
+    border-right: 1px solid #e0e0e0;
+    font-size: 18px;
+}
+
+.recommend ul li:last-child a{
+    border-right: 0;
+}
+
+.recommend .modify {
+    font-size: 16px;
+    color: #00a4ff;
+}
+
+.hd {
+    height: 60px;
+    line-height: 60px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.hd h3 {
+    font-size: 21px;
+    font-weight: 400;
+}
+
+.hd .more {
+    font-size: 14px;
+    color: #999;
+    padding-right: 20px;
+    background: url("../images/more.png") no-repeat right center;
+}
+
+.bd ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.bd ul li {
+    width: 228px;
+    height: 271px;
+    margin-bottom: 14px;
+}
+
+.bd ul li .pic {
+    height: 156px;
+}
+
+.bd ul li .text {
+    padding: 20px;
+    height: 115px;
+    background-color: #fff;
+}
+
+.bd ul li .text h4 {
+    margin-bottom: 13px;
+    height: 40px;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+.bd ul li .text p {
+    font-size: 14px;
+    line-height: 20px;
+    color: #999;
+}
+
+.hd ul {
+    display: flex;
+}
+
+.hd ul li {
+    margin-right: 60px;
+    font-size: 16px;
+}
+
+.hd ul li .active,
+.hd ul li a:hover {
+    color: #00a4ff;
+}
+
+.bd {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bd .left {
+    width: 228px;
+}
+
+.bd .right {
+    width: 957px;
+}
+
+.footer {
+    height: 273px;
+    background-color: #fff;
+    margin-top: 60px;
+    padding-top: 60px;
+}
+
+.footer .wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer .left {
+    width: 440px;
+}
+
+.footer .left p {
+    margin-top: 24px;
+    margin-bottom: 14px;
+    font-size: 12px;
+    line-height: 17px;
+    color: #666;
+}
+
+.footer .left .down {
+    display: inline-block;
+    width: 120px;
+    height: 36px;
+    background-color: #ffffff;
+    border: 1px solid #00a4ff;
+    line-height: 34px;
+    text-align: center;
+    font-size: 16px;
+    color: #00a4ff;
+}
+
+.footer .right {
+    display: flex;
+}
+
+.footer .right dl {
+    margin-left: 130px;
+    width: 64px;
+}
+
+.footer .right dt {
+    margin-bottom: 12px;
+    font-size: 16px;
+    line-height: 23px;
+}
+
+.footer .right a {
+    font-size: 14px;
+    color: #666;
+    line-height: 24px;
+}

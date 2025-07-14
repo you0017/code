@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        function Pig(name,age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        const pig1 = new Pig("佩奇",11);
+        const pig2 = new Pig("乔治",10);
+        console.warn(pig1,pig2);
+
+        function a(name,age) {
+            console.log(name,age)
+            this.name = name;
+        }
+        a("佩奇",11)
+    </script>
+</body>
+</html>

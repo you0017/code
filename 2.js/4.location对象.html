@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <a href="https://www.baidu.com"></a>
+    <script>
+        let s = 5000;
+        let inter = setInterval(function () {
+            s = s-1000;
+            document.querySelector('a').innerText = `还有${s/1000}秒跳转`;
+            console.log(s)
+            if (s<=1000) {
+                location.href="https://www.baidu.com";
+            }
+        },1000)
+    </script>
+</body>
+</html>

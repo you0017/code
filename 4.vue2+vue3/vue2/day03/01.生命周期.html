@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <button @click="name='小黑'">修改</button>
+</div>
+<script src="../js/vue2.js"></script>
+<script>
+    const app = new Vue({
+        el:"#app",
+        data:{
+            name:"小黑",
+            age:18
+        },
+        //1.创建阶段（准备数据
+        beforeCreate() {
+            console.log("1.创建阶段（准备数据）")
+        },
+        created() {
+            console.log("2.创建阶段（数据准备完毕）")
+        },
+
+        //2.挂在阶段（渲染模板
+        beforeMount() {
+            console.log("3.挂载阶段（开始渲染模板）")
+        },
+        mounted() {
+            console.log("4.挂载阶段（模板渲染完毕）")
+        },
+
+        //3.更新阶段
+        beforeUpdate() {
+            console.log("5.更新阶段（数据更新前）")
+        },
+        updated() {
+            console.log("6.更新阶段（数据更新后）")
+        },
+
+        //4.销毁阶段
+        beforeDestroy() {
+            console.log("7.销毁阶段（开始销毁）")
+        },
+        destroyed() {
+            console.log("8.销毁阶段（销毁完毕）")
+        }
+    })
+</script>
+</body>
+</html>

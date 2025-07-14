@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Document</title>
+    <!-- CSS only -->
+    <link
+            rel="stylesheet"
+            href="../../css/bootstrap.min.css"
+    />
+    <style>
+        .red {
+            color: red !important;
+        }
+
+        .search {
+            width: 300px;
+            margin: 20px 0;
+        }
+
+        .my-form {
+            display: flex;
+            margin: 20px 0;
+        }
+
+        .my-form input {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .table > :not(:first-child) {
+            border-top: none;
+        }
+
+        .contain {
+            display: flex;
+            padding: 10px;
+        }
+
+        .list-box {
+            flex: 1;
+            padding: 0 30px;
+        }
+
+        .list-box a {
+            text-decoration: none;
+        }
+
+        .echarts-box {
+            width: 600px;
+            height: 400px;
+            padding: 30px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+        }
+
+        tfoot {
+            font-weight: bold;
+        }
+
+        @media screen and (max-width: 1000px) {
+            .contain {
+                flex-wrap: wrap;
+            }
+
+            .list-box {
+                width: 100%;
+            }
+
+            .echarts-box {
+                margin-top: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="contain">
+        <!-- 左侧列表 -->
+        <div class="list-box">
+
+            <!-- 添加资产 -->
+            <form class="my-form">
+                <input type="text" class="form-control" placeholder="消费名称"/>
+                <input type="text" class="form-control" placeholder="消费价格"/>
+                <button type="button" class="btn btn-primary">添加账单</button>
+            </form>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>消费名称</th>
+                    <th>消费价格</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(item,index) in list" :key="index">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.price }}</td>
+                    <td><a href="javascript:;">删除</a></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="4">消费总计： {{ total }}</td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!-- 右侧图表 -->
+        <div class="echarts-box" id="main"></div>
+    </div>
+</div>
+<script src="../../js/echarts.js"></script>
+<script src="../../js/vue2.js"></script>
+<script src="../../js/axios.min.js"></script>
+<script>
+    /**
+     * 接口文档地址：
+     * https://www.apifox.cn/apidoc/shared-24459455-ebb1-4fdc-8df8-0aff8dc317a8/api-53371058
+     *
+     * 功能需求：
+     * 1. 基本渲染
+     * 2. 添加功能
+     * 3. 删除功能
+     * 4. 饼图渲染
+     */
+    const app = new Vue({
+        el: '#app',
+        data: {
+            list: [
+                {
+                    id: 1,
+                    name: '帽子',
+                    price: 99.00
+                },
+                {
+                    id: 2,
+                    name: '大衣',
+                    price: 199.00
+                }
+            ]
+        },
+        computed: {
+            total: {
+                get() {
+                    return this.list.reduce((total, item) => {
+                        return total + item.price
+                    }, 0)
+                }
+            }
+        },
+        mounted() {
+            /*axios.get("https://www.apifox.cn/apidoc/shared-24459455-ebb1-4fdc-8df8-0aff8dc317a8/api-53371058",{
+                params: {
+                    creator: '小黑'
+                }
+            }).then(
+                    result => {
+                      this.list = result.data.data;
+                    }
+            )*/
+            const chartDom = document.getElementById('main');
+            const myChart = echarts.init(chartDom);
+            const option = {
+                title: {
+                    text: 'Referer of a Website',
+                    subtext: 'Fake Data',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left'
+                },
+                series: [
+                    {
+                        name: 'Access From',
+                        type: 'pie',
+                        radius: '50%',
+                        data: this.list.map(item => {
+                            return {
+                                value: item.price,
+                                name: item.name
+                            }
+                        }),
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            myChart.setOption(option)/*
+            console.log(option.series[0].data)
+            console.log(this.list.map(item => {
+                return {
+                    value: item.price,
+                    name: item.name
+                }
+            }))
+            option.series[0].data = this.list.map(item => {
+                return {
+                    value: item.price,
+                    name: item.name
+                }
+            })*/
+        }
+    })
+</script>
+</body>
+</html>

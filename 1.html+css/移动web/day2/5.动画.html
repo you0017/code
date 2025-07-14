@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 150px;
+            background-color: red;
+            /*animation: myAnimation 1s 1s infinite alternate;*/
+            /*animation: myAnimation2 1s linear;*//*匀速*/
+            /*animation: myAnimation2 1s steps(3);*//*分三步*/
+            /*animation: myAnimation2 1s linear infinite alternate;*/
+            animation-name: myAnimation2;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+        }
+
+        .box:hover {
+            animation-play-state: paused;
+        }
+
+        /*动画1： 宽度200变800*/
+        @keyframes myAnimation {
+            from {
+                width: 200px;
+            }
+            to {
+                width: 800px;
+            }
+        }
+        /*动画2： 宽度200*150，300*300 800*800*/
+        @keyframes myAnimation2 {
+            0% {
+                width: 200px;
+                height: 150px;
+            }
+            50% {
+                width: 300px;
+                height: 300px;
+            }
+            100% {
+                width: 800px;
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+
+    </div>
+    <img width="600px" src="../../imgs/移动web/animation.png" alt="动画效果图"/>
+    <img width="600px" src="../../imgs/移动web/animation2.png" alt="动画效果图"/>
+</body>
+</html>

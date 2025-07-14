@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <img src="./imgs/img.png" alt="#"/>
+
+  <script>
+      let arr = [1,2,3,4,5];
+      console.log(arr.reduce(
+          function (pre,cur,index,array) {
+              console.warn(pre,cur,index,array);
+              return pre + cur;
+          },0
+      ))
+      console.log(arr)
+
+      arr = [1,2,3,4,5];
+      arr.map(
+          function (item,index,array) {
+              console.warn(item,index,array);
+              return item * 2;
+          }
+      )
+      console.log(arr)
+
+      arr = [1,2,3,4,5];
+      arr.filter(
+          function (item,index,array) {
+              console.warn(item,index,array);
+              return item > 2;
+          }
+      )
+      console.log(arr)
+
+      arr.forEach(
+          function (item,index,array) {
+              console.warn(item,index,array);
+          }
+      )
+  </script>
+</body>
+</html>

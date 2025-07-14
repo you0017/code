@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .father{
+            width: 500px;
+            height: 500px;
+            background: pink;
+            /*用这个，或者不用margin，用padding*/
+            /*父级用透明的border也可以*/
+            /*border: 100px solid transparent;*/
+            overflow: hidden;
+        }
+        .son{
+            width: 200px;
+            height: 200px;
+            background: blue;
+            margin: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="father">
+        <div class="son">
+            123
+        </div>
+    </div>
+我只要求son有margin，father不要
+</body>
+</html>
