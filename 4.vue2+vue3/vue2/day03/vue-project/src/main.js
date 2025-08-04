@@ -7,7 +7,7 @@ new Vue({
   el: '#app',
 
   //基于app.vue创建结构
-  //render: h => h(App),
+  //render: h => h(Basic),
   render(createElement) {
     return createElement(App)
   }

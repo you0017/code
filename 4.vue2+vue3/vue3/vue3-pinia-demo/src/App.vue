@@ -16,7 +16,7 @@ const { getList } = channelStore
 <template>
   <div>
     <h3>
-      App.vue根组件 
+      Basic.vue根组件
       - {{ count }}
       - {{ msg }}
     </h3>
