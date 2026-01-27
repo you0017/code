@@ -15,6 +15,7 @@
 import CartHeader from '@/components/cart-header.vue'
 import CartFooter from '@/components/cart-footer.vue'
 import CartItem from '@/components/cart-item.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'App',
@@ -28,10 +29,11 @@ export default {
     CartFooter,
     CartItem
   },
-  mounted () {
-    this.list = this.$store.state.cart.cart
-  },
   computed: {
+    ...mapState('cart', ['cart'])
+  },
+  mounted () {
+    this.list = this.cart
   }
 }
 </script>

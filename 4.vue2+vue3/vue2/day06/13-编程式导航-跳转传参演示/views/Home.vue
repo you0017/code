@@ -24,6 +24,11 @@ export default {
   },
   methods: {
     goSearch () {
+      /*this.$router.push(`/search/${this.inpValue}?a=1&b=2`)
+      <p>搜索关键字: {{ $route.params.words }} </p>
+      <p>搜索关键字: {{ $route.query.a }} </p>
+      <p>搜索关键字: {{ $route.query.b }} </p>*/
+
       // 1. 通过路径的方式跳转
       // (1) this.$router.push('路由路径') [简写]
       //     this.$router.push('路由路径?参数名=参数值')
@@ -45,7 +50,16 @@ export default {
       //   }
       // })
       // this.$router.push({
-      //   path: `/search/${this.inpValue}`
+      //   path: `/search/${this.inpValue}`,
+      //   query: {
+      //     a: 1,
+      //     b: 2
+      //   },
+      //   // 只有name跳转才可以
+      //   /*params: {
+      //     c: 3,
+      //     d: 4
+      //   }*/
       // })
 
 
@@ -58,11 +72,14 @@ export default {
       //    })
       this.$router.push({
         name: 'search',
+        // 只有path能用
         // query: {
-        //   key: this.inpValue
-        // }
+        //   key: this.inpValue,
+        //   a: 1,
+        // },
         params: {
-          words: this.inpValue
+          words: this.inpValue,
+          b: 2
         }
       })
     }

@@ -1,167 +1,223 @@
-<script>
-import request from "@/utils/request";
-import {getImgCode, getSmsCode, login} from "@/api/login.js";
-import {Toast} from "vant";
-import {mapMutations} from "vuex";
+<script lang="ts">
+import { getCaptcha, login, sendSmsCaptcha } from '@/api/login'
+import { Toast } from 'vant'
+import { mapMutations } from 'vuex'
 
-export default {
-  name: 'Login',
-  methods: {
-    ...mapMutations('user',['setUserInfo']),
-
-    async getImgCode() {
-      const res = await getImgCode();
-      this.imgRes = res.data;
-      Toast.success('获取图形验证码成功')
-    },
-    async getSmsCode() {
-      if (!this.mobile) {
-        Toast.fail('请输入手机号')
-        return
-      }
-      if (!this.picCode) {
-        Toast.fail('请输入图形验证码')
-        return
-      }
-      //倒计时
-      setInterval(() => {
-        if (this.currentSecond > 0) {
-          this.currentSecond--;
-          this.codeMsg = this.currentSecond + '秒后重新获取';
-        } else {
-          this.currentSecond = this.totalSecond;
-          this.codeMsg = '重新获取';
-        }
-      },1000)
-      const res = await getSmsCode(this.picCode,this.imgRes.key,this.mobile);
-      if (res.status === 200) {
-        Toast.success('获取短信验证码成功')
-      }else {
-        Toast.fail('获取短信验证码失败')
-      }
-    },
-
-    async login() {
-      if (!this.mobile) {
-        Toast.fail('请输入手机号')
-        return
-      }
-      if (!this.msgCode) {
-        Toast.fail('请输入短信验证码')
-        return
-      }
-      const res = await login(this.msgCode,this.mobile);
-      if (res.status === 200) {
-        localStorage.setItem('token',res.data.token);
-        Toast.success('登录成功')
-        this.setUserInfo(res.data);
-        // 判断有无回跳地址
-        const url = this.$route.query.backUrl || '/'
-        this.$router.replace(url)
-      }else {
-        Toast.fail('登录失败')
-      }
-    }
-  },
-  data() {
+export default ({
+  name: 'LoginIndex',
+  data () {
     return {
-      imgRes: '',
-      totalSecond: 60,
-      currentSecond: 60,
-      codeMsg: '获取验证码',
-
+      base64: '',
+      key: '',
+      md5: '',
+      msg: '获取验证码',
+      count: 60,
+      timer: null,
+      captchaCode: '',
       mobile: '',
-      msgCode: '',
-      picCode: ''
+      smsCode: ''
     }
   },
-  created() {
-    this.getImgCode();
+  methods: {
+    async getCaptcha (this: any) {
+      const res = await getCaptcha() as API.ResultData
+      if (res && res.status === 200) {
+        const data: API.CaptchaResponse = res.data
+        this.base64 = data?.base64 || ''
+        this.key = data?.key || ''
+        this.md5 = data?.md5 || ''
+      }
+    },
+    async sendMsg (this: any) {
+      if (!this.captchaCode) {
+        Toast('请输入图形验证码')
+        return
+      }
+      if (!this.mobile) {
+        Toast('请输入手机号')
+        return
+      }
+      this.$refs.sendCode.disabled = true
+      this.timer = setInterval(() => {
+        this.msg = `重新发送(${this.count})`
+        this.count--
+        if (this.count <= 0) {
+          this.msg = '重新发送'
+          this.count = 60
+          this.$refs.sendCode.disabled = false
+          clearInterval(this.timer)
+        }
+      }, 1000)
+      await sendSmsCaptcha({
+        captchaCode: this.captchaCode,
+        captchaKey: this.key,
+        mobile: this.mobile
+      })
+    },
+    async login (this: any) {
+      try {
+        const res = await login({
+          form: {
+            mobile: this.mobile,
+            smsCode: this.smsCode,
+            isParty: false,
+            partyData: {}
+          }
+        }) as API.ResultData
+        this.setUserId(res.data.userId)
+        this.setToken(res.data.token)
+        Toast.success('登录成功')
+        await this.$router.push('/')
+      } catch (error: any) {
+        Toast(error)
+      }
+    },
+    ...mapMutations('user', ['setUserId', 'setToken'])
+  },
+  async created (this: any) {
+    await this.getCaptcha()
+    Toast('加载验证码成功')
+  },
+  destroyed (this: any) {
+    clearInterval(this.timer)
   }
-}
+})
 </script>
 
 <template>
-  <div id="login">
+  <div class="login-page">
     <van-nav-bar
       title="会员登录"
       left-arrow
+      fixed
+      placeholder
       @click-left="$router.back()"
+      class="login-nav"
     />
-    <div class="nav">
-      <h1 style="font-weight: normal;">手机号登录</h1>
-      <p style="color: #333">未注册手机号自动注册</p>
+
+    <div class="content">
+      <h1 class="main-title">手机号登录</h1>
+      <p class="sub-title">未注册的手机号登录后将自动注册</p>
+
       <div class="form">
-        <input type="text" placeholder="请输入手机号" v-model="mobile">
-        <div class="imgCode">
-          <input type="text" placeholder="请输入图形验证码" v-model="picCode"/>
-          <img v-if="imgRes.base64" :src="`${imgRes.base64}`" alt="图片" @click="getImgCode()"/>
-        </div>
-        <div class="msgCode">
-          <input type="text" placeholder="请输入短信验证码" v-model="msgCode"/>
-          <button @click="getSmsCode()">{{ codeMsg }}</button>
-        </div>
-        <button class="login_button" @click="login()">登录</button>
+        <van-field
+          type="tel"
+          placeholder="请输入手机号"
+          clearable
+          class="field"
+          v-model="mobile"
+        />
+
+        <van-field
+          placeholder="请输入图形验证码"
+          clearable
+          class="field"
+          v-model="captchaCode"
+        >
+          <template #button>
+            <img class="captcha-img" :src="base64" alt="captcha" @click="getCaptcha"/>
+          </template>
+        </van-field>
+
+        <van-field
+          placeholder="请输入短信验证码"
+          clearable
+          class="field"
+          v-model="smsCode"
+        >
+          <template #button>
+            <button class="get-code" type="button" @click="sendMsg" ref="sendCode">{{ msg }}</button>
+          </template>
+        </van-field>
       </div>
+
+      <van-button class="submit" round block type="primary" @click="login">登录</van-button>
     </div>
   </div>
 </template>
 
 <style scoped>
-.nav {
-  margin-top: 60px;
-  padding: 0 30px;
+.login-page {
+  min-height: 100vh;
+  background: #fff;
 }
 
-div {
-  margin-top: 30px;
+.login-nav ::v-deep .van-nav-bar__title {
+  font-weight: 600;
+  color: #333;
 }
 
-input {
-  height: 40px;
-  width: 100%;
-  border: none;
-  border-bottom: solid 1px #ccc;
+.login-nav ::v-deep .van-nav-bar__arrow {
+  font-size: 18px;
+  color: #333;
 }
 
-.imgCode {
-  width: 100%;
-  display: flex;
+.content {
+  padding: 18px 16px 0;
 }
 
-.imgCode input {
-  width: 70%;
+.main-title {
+  margin: 10px 0 6px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #222;
 }
 
-.imgCode img {
-  width: 30%;
-  border-bottom: solid 1px #ccc;
+.sub-title {
+  margin: 0 0 22px;
+  font-size: 13px;
+  color: #a2a6ad;
 }
 
-.msgCode {
-  display: flex;
-  align-items: stretch;
+.form {
+  background: #fff;
 }
 
-.msgCode input {
-  width: 70%;
+.field {
+  padding: 0;
 }
 
-.msgCode button {
-  display: block;
-  height: 40px;
-  width: 30%;
-  background-color: #ffffff;
-  border: none;
-  border-bottom: solid 1px #ccc;
+.field ::v-deep .van-cell {
+  padding: 0;
 }
 
-.login_button {
-  width: 100%;
-  height: 40px;
-  margin-top: 40px;
-  background-color: orange;
-  border:  none;
-  border-radius: 39px;
+.field ::v-deep .van-field__control {
+  height: 52px;
+  padding: 0;
+  font-size: 15px;
+  color: #333;
+}
+
+.field ::v-deep .van-cell__value {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.captcha-img {
+  width: 112px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.get-code {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 14px;
+  color: #d9b57a;
+}
+
+.submit {
+  margin-top: 28px;
+  height: 46px;
+  border: 0;
+  background-image: linear-gradient(90deg, #f3c56a, #eda248);
+  box-shadow: 0 8px 18px rgba(237, 162, 72, 0.25);
+}
+
+.submit ::v-deep .van-button__text {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
 }
 </style>

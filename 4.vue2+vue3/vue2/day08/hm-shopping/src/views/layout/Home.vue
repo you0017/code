@@ -1,149 +1,67 @@
-<script>
-import GoodsItem from '@/components/GoodsItem.vue'
-import {getHomeData} from "@/api/home";
-export default {
-  name: 'Home',
-  components: {
-    GoodsItem
-  },
-  data() {
+<script lang="ts">
+export default ({
+  name: 'HomeIndex',
+  data () {
     return {
-      pageData: {},
-      page: [],
-      banner: [],
-      navBar: [],
-      image: {},
-      richText: {}
+      value: ''
+    }
+  },
+  props: {
+    title: String,
+    page: {
+      type: Object,
+      default: () => ({ items: [] })
     }
   },
   methods: {
-    async getHomeData() {
-      const res = await getHomeData();
-      this.pageData = res.data.pageData
-      this.pageData.items.forEach(item => {
-        if (item.type === 'banner') {
-          this.banner = item.data
-        }
-        if (item.type === 'navBar') {
-          this.navBar = item.data
-        }
-        if (item.type === 'image') {
-          this.image = item.data
-        }
-        if (item.type === 'richText') {
-          this.richText = item.params
-        }
-        if (item.type === 'goods') {
-          this.page = item.data
-        }
-      })
-    }
   },
-  created() {
-    this.getHomeData();
+  mounted (this: any) {
   }
-}
+})
 </script>
 
 <template>
-  <div class="home">
-    <!-- 导航条 -->
-    <van-nav-bar title="智慧商城" fixed />
+  <div>
+    <div style="padding: 10px 0; background-color: #00BE9A; font-size: large">
+      智慧商城
+    </div>
 
-    <!-- 搜索框 -->
     <van-search
-      readonly
-      shape="round"
-      background="#f1f1f2"
-      placeholder="请在此输入搜索关键词"
-      @click="$router.push('/search')"
+      v-model="value"
+      :placeholder="page.items && page.items[0] && page.items[0].params ? page.items[0].params.placeholder : '请输入关键词'"
+      @click="$router.push(`/search/${page.items && page.items[0] && page.items[0].params ? page.items[0].params.placeholder : '请输入关键词'}`)"
     />
 
-    <!-- 轮播图 -->
-    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-      <van-swipe-item v-for="(item,index) in banner" :key="index" @click="$router.push(`${item.link.param.url}`)">
-        <img :src="item.imgUrl" :alt="item.imgName">
+    <van-swipe v-if="page.items && page.items[1] && page.items[1].data" :autoplay="3000">
+      <van-swipe-item v-for="(image, index) in page.items[1].data" :key="index">
+        <img alt="#" :src="image.imgUrl" width="100%" />
       </van-swipe-item>
     </van-swipe>
 
-    <!-- 导航 -->
-    <van-grid column-num="5" icon-size="40">
-      <van-grid-item
-        v-for="(item,index) in navBar" :key="index"
-        :icon="item.imgUrl"
-        :text="item.text"
-        @click="$router.push(`${item.link.param.url}`)"
-      />
+    <van-notice-bar
+      v-if="page.items && page.items[2] && page.items[2].params"
+      left-icon="volume-o"
+      :text="page.items[2].params.text"
+    />
+
+    <van-grid :column-num="5">
+      <van-grid-item v-for="(value, index) in page.items[3].data" :key="index" :icon="value.imgUrl" :text="value.text" @click="to(value.link.param.path)" />
     </van-grid>
 
-    <!-- 主会场 -->
-    <div class="main">
-      <img v-for="(item,index) in image" :src="`${item.imgUrl}`" :alt="item.imgName" @click="$router.push(`${item.link.param.url}`)"/>
-    </div>
-
-    <!-- 猜你喜欢 -->
-    <div class="guess">
-      <p v-html="richText.content"></p>
-
-      <div class="goods-list">
-        <GoodsItem v-for="(item,index) in page" :key="index" :item="item"></GoodsItem>
-      </div>
-    </div>
+    <template v-if="page.items && page.items[6] && page.items[6].data">
+      <van-card
+        v-for="(item, index) in page.items[6].data"
+        :key="index"
+        :price="item.goods_price_max"
+        :title="item.goods_name"
+        :thumb="item.goods_image"
+        :origin-price="item.goods_price_min"
+        @click="$router.push(`/proDetail/${item.id}`)"
+      />
+    </template>
   </div>
 </template>
 
-<style lang="less" scoped>
-// 主题 padding
-.home {
-  padding-top: 100px;
-  padding-bottom: 50px;
-}
+<style scoped>
 
-// 导航条样式定制
-.van-nav-bar {
-  z-index: 999;
-  background-color: #c21401;
-  ::v-deep .van-nav-bar__title {
-    color: #fff;
-  }
-}
-
-// 搜索框样式定制
-.van-search {
-  position: fixed;
-  width: 100%;
-  top: 46px;
-  z-index: 999;
-}
-
-// 分类导航部分
-.my-swipe .van-swipe-item {
-  height: 185px;
-  color: #fff;
-  font-size: 20px;
-  text-align: center;
-  background-color: #39a9ed;
-}
-.my-swipe .van-swipe-item img {
-  width: 100%;
-  height: 185px;
-}
-
-// 主会场
-.main img {
-  display: block;
-  width: 100%;
-}
-
-// 猜你喜欢
-.guess .guess-title {
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-}
-
-// 商品样式
-.goods-list {
-  background-color: #f6f6f6;
-}
 </style>

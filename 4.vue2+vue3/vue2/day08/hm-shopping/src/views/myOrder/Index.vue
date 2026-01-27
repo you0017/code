@@ -1,12 +1,12 @@
-<script>
-export default {
-  name: 'MyOrder'
-}
+<script lang="ts">
+export default ({
+  name: 'MyOrderIndex'
+})
 </script>
 
 <template>
   <div>
-    MyOrder
+    <h1>MyOrderIndex</h1>
   </div>
 </template>
 

@@ -35,8 +35,21 @@ export default {
     }
   },
   getters: {
+    count (state) {
+      return state.cart.reduce((total, item) => total + item.count, 0)
+    },
+    amount (state) {
+      return state.cart.reduce((total, item) => total + item.count * item.price, 0)
+    }
   },
   mutations: {
+    modifyCount (state, obj) {
+      state.cart.forEach(item => {
+        if (item.id === obj.id) {
+          item.count += obj.count
+        }
+      })
+    }
   },
   actions: {
   },

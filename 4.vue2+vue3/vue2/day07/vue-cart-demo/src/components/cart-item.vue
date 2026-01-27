@@ -13,9 +13,9 @@
         <span class="price">￥{{ item.price }}</span>
         <div class="btns">
           <!-- 按钮区域 -->
-          <button class="btn btn-light">-</button>
+          <button class="btn btn-light" @click="updateCount(item.id, -1)">-</button>
           <span class="count">{{ item.count }}</span>
-          <button class="btn btn-light">+</button>
+          <button class="btn btn-light" @click="updateCount(item.id, 1)">+</button>
         </div>
       </div>
     </div>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   name: 'CartItem',
   props: {
@@ -32,6 +34,10 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('cart', ['modifyCount']),
+    updateCount (id, count) {
+      this.modifyCount({ id, count })
+    }
   }
 }
 </script>
