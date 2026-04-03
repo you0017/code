@@ -89,6 +89,8 @@ const App = () => {
     const handlerTabs = function (type) {
         setType(type)
     }
+
+    const [text, setText] = useState('')
     return (
         <div className="app">
             {/* 导航 Tab */}
@@ -122,10 +124,21 @@ const App = () => {
                         <textarea
                             className="reply-box-textarea"
                             placeholder="发一条友善的评论"
+                            onChange={(e) => setText(e.target.value)}
+                            value={text}
                         />
                         {/* 发布按钮 */}
                         <div className="reply-box-send">
-                            <div className="send-text">发布</div>
+                            <div className="send-text" onClick={(e) => {
+                                setCommentList([...commentList, {
+                                    rpid: commentList.length + 1,
+                                    user,
+                                    content: text,
+                                    ctime: new Date().toLocaleString(),
+                                    like: 0,
+                                }])
+                                setText('')
+                            }}>发布</div>
                         </div>
                     </div>
                 </div>

@@ -54,4 +54,4 @@ function Basic() {
     );
 }
 
-export default App;
+export default Basic;

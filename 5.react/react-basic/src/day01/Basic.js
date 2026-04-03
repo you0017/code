@@ -1,4 +1,5 @@
 import Header from "./Header";
+import {useState} from "react";
 
 const count = 10;
 
@@ -19,7 +20,7 @@ const list = [
 
 const isLogin = true;
 
-const articleType = 3; //0,1,3
+const articleType = 0; //0,1,3
 //定义核心函数，根据文章类型返回不同的jsx模板
 const getArticleTem = function () {
     if (articleType === 0) {
@@ -51,10 +52,18 @@ const handleClick = function (e,name) {
 
 const Button = function () {
     return (
-        <button>按钮组件</button>
+        <button onClick={(e) => handleClick(e,getName())}>按钮组件</button>
     )
 }
+
+const Button2 = function () {
+    return 2
+}
+
 function Basic() {
+
+    const [count, setCount] = useState(0)
+
     return (
         <div className="App" style={{color: "red"}}>
             <Header/>
@@ -71,7 +80,7 @@ function Basic() {
             <ul>
                 {
                     list.map(item => (
-                        <li key={item.id}>{item.name}</li>
+                        item.id === 2 ? <li key={item.id}>{item.name}</li> : null
                     ))
                 }
             </ul>
@@ -88,6 +97,11 @@ function Basic() {
             <button onClick={(e) => handleClick(e,getName())}>按钮</button>
             {/*组件*/}
             <Button/>
+            { Button2() }
+            { /* userState */}
+            <br/>
+            <div> { count } </div>
+            <button onClick={(e) => setCount(count + 1)}>Change Count</button>
         </div>
     );
 }
